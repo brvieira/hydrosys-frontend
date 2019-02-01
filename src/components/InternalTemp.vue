@@ -76,7 +76,5 @@ export default {
 };
 </script>
 <style scoped>
-.container {
-    margin: 5rem 2rem;
-}
+
 </style>

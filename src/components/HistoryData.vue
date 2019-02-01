@@ -1,10 +1,8 @@
 <template>
   <div class="container">
-    <h1>HYDROSYS</h1>
     <internal-humidity v-if="loaded" :data="internalHumidity" :labels="labels"></internal-humidity>
     <internal-temp v-if="loaded" :data="internalTemp" :labels="labels"></internal-temp>
     <solution-temp v-if="loaded" :data="solutionTemp" :labels="labels"></solution-temp>
-    <h4>Desenvolvido por Bruno Vieira Rosa</h4>
   </div>
 </template>
 
@@ -66,6 +64,6 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .container {
-  margin: 2rem 5rem;
+  margin-top: 3rem
 }
 </style>
