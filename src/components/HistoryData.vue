@@ -32,12 +32,6 @@ export default {
         let self = this;
         self.loaded = false;
         let result = await api.getAllData();
-        result = result.filter(
-          x =>
-            moment(x.data).minute() == 0 ||
-            moment(x.data).minute() == 20 ||
-            moment(x.data).minute() == 40
-        )
 
         self.internalTemp = result.map(x => x.temperaturaInterna);
         self.internalHumidity = result.map(x => x.umidadeInterna);
