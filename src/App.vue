@@ -1,16 +1,16 @@
 <template>
   <div id="app">
-    <navbar/>
+    <sidebar/>
     <router-view/>
   </div>
 </template>
 
 <script>
-import navbar from './components/Navbar'
+import sidebar from './components/SideBar'
 
 export default {
   name: 'App',
-  components: { navbar }
+  components: { sidebar }
 }
 </script>
 
@@ -23,6 +23,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  background: #1e1e2a;
 }
 
 i {
