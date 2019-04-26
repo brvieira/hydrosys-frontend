@@ -1,29 +1,20 @@
 <template>
-  <div class="container">
-    <internal-humidity v-if="loaded" :data="internalHumidity" :labels="labels"></internal-humidity>
-    <internal-temp v-if="loaded" :data="internalTemp" :labels="labels"></internal-temp>
-    <solution-temp v-if="loaded" :data="solutionTemp" :labels="labels"></solution-temp>
+  <div v-if="loaded" class="container is-fullhd">
+    <chart v-for="(metric, index) of data" :data="metric" :key="index"></chart>
   </div>
 </template>
-
 <script>
 import * as api from "../data/hydrosys";
-import InternalTemp from "./InternalTemp";
-import InternalHumidity from "./InternalHumidity";
-import SolutionTemp from "./SolutionTemp";
+import chart from "./Chart";
 import moment from "moment";
 
 export default {
   name: "HistoryData",
-  components: { InternalTemp, InternalHumidity, SolutionTemp },
+  components: { chart },
   data() {
     return {
       loaded: false,
-      internalTemp: null,
-      internalHumidity: null,
-      solutionTemp: null,
-      labels: null,
-      options: null
+      data: null
     };
   },
   methods: {
@@ -32,12 +23,24 @@ export default {
         let self = this;
         self.loaded = false;
         let result = await api.getAllData();
+        let data = [];
 
-        self.internalTemp = result.map(x => x.temperaturaInterna);
-        self.internalHumidity = result.map(x => x.umidadeInterna);
-        self.solutionTemp = result.map(x => x.temperaturaSolucao);
-        self.labels  = result.map(x => moment(x.data).format("DD/MM/YY - HH:mm"));
-
+        for (let item of result) {
+          for (let metric in item) {
+            if (metric != "_id" && metric != "token" && metric != "data") {
+              if (!data.find(x => x.name == metric)) {
+                data.push({ name: metric, data: [] });
+              }
+              data
+                .find(x => x.name == metric)
+                .data.push({
+                  x: item.data,
+                  y: item[metric]
+                });
+            }
+          }
+        }
+        self.data = data;
         self.loaded = true;
       } catch (error) {
         console.log(error);
@@ -45,17 +48,11 @@ export default {
     }
   },
   mounted() {
-    let self = this;
     this.getAllData();
-    setInterval(function() {
-      self.getAllData();
-      console.log("Loading data...");
-    }, 5 * 60 * 1000);
   }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
 </style>

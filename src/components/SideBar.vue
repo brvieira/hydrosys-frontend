@@ -2,6 +2,7 @@
   <div class="left-bar">
     <p class="bar-title"><strong>HYDRO</strong>SYS</p>
     <hr>
+    <div class="add-button"><h1>+</h1></div>
   </div>
 </template>
 <script>
@@ -43,6 +44,30 @@ p.bar-title, p.bar-title strong {
 hr {
   margin: 0 1.5rem;
   height: 1.5px;
+}
+
+.add-button {
+  margin-left: auto;
+  margin-right: auto; 
+  position: absolute;
+  bottom: 2rem;
+  left: 0;
+  right: 0;
+  background: white;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%
+}
+
+.add-button h1 {
+  line-height: 3rem;
+  font-size: 2rem;
+  color: #42b883;
+}
+
+.add-button:hover {
+  cursor: pointer;
+  box-shadow: 3px 5px 7px -1px black;
 }
 
 </style>
