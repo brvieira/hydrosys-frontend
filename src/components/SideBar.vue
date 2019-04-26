@@ -22,7 +22,7 @@ export default {
   position: fixed;
   height: 95%;
   width: 4rem;
-  background: linear-gradient(0deg,#389466,#42b883);;
+  background: linear-gradient(0deg,#389466,#42b883);
   top: calc(5vh / 2);
   transition: width 0.5s linear;
 }

@@ -23,24 +23,8 @@ export default {
         let self = this;
         self.loaded = false;
         let result = await api.getAllData();
-        let data = [];
-
-        for (let item of result) {
-          for (let metric in item) {
-            if (metric != "_id" && metric != "token" && metric != "data") {
-              if (!data.find(x => x.name == metric)) {
-                data.push({ name: metric, data: [] });
-              }
-              data
-                .find(x => x.name == metric)
-                .data.push({
-                  x: item.data,
-                  y: item[metric]
-                });
-            }
-          }
-        }
-        self.data = data;
+        
+        self.data = result;
         self.loaded = true;
       } catch (error) {
         console.log(error);

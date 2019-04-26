@@ -103,7 +103,7 @@ export default {
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
   background: #27293d;
-  border-radius: 10px;
+  border-radius: 5px;
 }
 
 .header-area {

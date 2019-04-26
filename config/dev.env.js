@@ -4,5 +4,5 @@ const prodEnv = require('./prod.env')
 
 module.exports = merge(prodEnv, {
   NODE_ENV: '"development"',
-  BACKEND: JSON.stringify('https://hydroapi.herokuapp.com')
+  BACKEND: JSON.stringify('http://localhost:3000')
 })
