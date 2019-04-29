@@ -5,34 +5,91 @@
         <b>HYDRO</b>SYS
       </p>
       <hr>
+      <p v-if="mensagem" class="erro-msg">{{mensagem}}</p>
       <div class="field">
-        <p class="control has-icons-left has-icons-right">
-          <input class="input" type="email" placeholder="Email">
+        <div class="control has-icons-left has-icons-right">
+          <input v-model="email" class="input" type="email" placeholder="Email">
           <span class="icon is-small is-left">
             <i class="fas fa-envelope"></i>
           </span>
-        </p>
+           <p v-if="erros && erros.email" class="help">{{erros.email}}</p>
+        </div>
       </div>
       <div class="field">
-        <p class="control has-icons-left has-icons-right">
-          <input class="input" type="password" placeholder="Senha">
+        <div class="control has-icons-left has-icons-right">
+          <input v-model="senha" class="input" type="password" placeholder="Senha">
           <span class="icon is-small is-left">
             <i class="fas fa-lock"></i>
           </span>
-        </p>
+           <p v-if="erros && erros.senha" class="help">{{erros.senha}}</p>
+        </div>
       </div>
       <div class="control">
-        <button class="button is-dark is-fullwidth">Entrar</button>
+        <button @click="logar()" class="button is-dark is-fullwidth">Entrar</button>
       </div>
       <p class="cadastro">
         Não tem uma conta?
-        <a>Cadastre-se!</a>
+        <router-link to="/cadastro" class="link-cadastro">Cadastre-se!</router-link>
       </p>
     </div>
   </div>
 </template>
 <script>
-export default {};
+import * as usuariosUtils from '../data/usuarios';
+
+export default {
+  name: "Login",
+  data() {
+    return {
+      email: null,
+      senha: null,
+      erros: {},
+      mensagem: null
+    }
+  },
+  methods: {
+    async logar() {
+      this.mensagem = null;
+
+      if(this.checarForm()) {
+        let usuario = {
+          email: this.email,
+          senha: this.senha
+        }
+        let resposta = await usuariosUtils.login(usuario);
+
+        if(resposta.status) {
+          localStorage.setItem('usuario', JSON.stringify(resposta.usuario));
+          this.$router.push({name: 'dashboard'});
+        } else {
+          this.mensagem = resposta.message;
+        }
+      }
+    },
+    checarForm() {
+      this.erros = {};
+
+      if (!this.email) {
+        this.erros.email = 'O e-mail é obrigatório.';
+      } else if (!this.validarEmail(this.email)) {
+        this.erros.email = 'Utilize um e-mail válido.';
+      }
+
+      if (!this.senha) {
+        this.erros.senha = 'A senha é obrigatória.';
+      }
+
+      if (!this.erros.nome && !this.erros.email) {
+        return true;
+      }
+
+    },
+    validarEmail (email) {
+      let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(email);
+    }
+  }
+};
 </script>
 <style scoped>
 .container {
@@ -62,13 +119,12 @@ export default {};
 }
 
 .login-area .field .input:focus {
-    border-color: grey;
-    box-shadow: 0 0 0.125em grey;
+  border-color: grey;
+  box-shadow: 0 0 0.125em grey;
 }
 
 .login-area .control .button {
   margin-top: 1rem;
-  
 }
 
 .login-area p.cadastro {
@@ -76,13 +132,13 @@ export default {};
   margin-top: 1rem;
 }
 
-.login-area p.cadastro a {
+.login-area p.cadastro .link-cadastro {
   color: white;
   font-size: 1.2rem;
   text-decoration: underline;
 }
 
-.login-area p.cadastro a:hover {
+.login-area p.cadastro .link-cadastro:hover {
   color: #1e1e2a;
 }
 </style>

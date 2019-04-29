@@ -13,7 +13,7 @@ export default {
   components: { sidebar },
   computed: {
   hide () {
-    return this.$route.path === '/' || this.$route.path === '/register'; 
+    return this.$route.path === '/' || this.$route.path === '/cadastro'; 
   }
 }
 }
