@@ -1,16 +1,18 @@
 <template>
   <div id="app">
     <sidebar v-if="!hide"/>
+    <navbar v-if="!hide"/>
     <router-view/>
   </div>
 </template>
 
 <script>
 import sidebar from './components/SideBar'
+import navbar from './components/Navbar'
 
 export default {
   name: 'App',
-  components: { sidebar },
+  components: { sidebar, navbar },
   computed: {
   hide () {
     return this.$route.path === '/' || this.$route.path === '/cadastro'; 

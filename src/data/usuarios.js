@@ -10,4 +10,8 @@ function login(user) {
     return axios.postUrl(url + '/login', user);
 }
 
-export { newUser, login }
+function editUser(user) {
+    return axios.postUrl(url + '/editUser', user);
+}
+
+export { newUser, login, editUser }

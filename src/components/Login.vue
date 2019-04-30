@@ -25,7 +25,7 @@
         </div>
       </div>
       <div class="control">
-        <button @click="logar()" class="button is-dark is-fullwidth">Entrar</button>
+        <button @click="logar" class="button is-dark is-fullwidth">Entrar</button>
       </div>
       <p class="cadastro">
         Não tem uma conta?
@@ -48,7 +48,8 @@ export default {
     }
   },
   methods: {
-    async logar() {
+    async logar(event) {
+      event.target.classList.add('is-loading');
       this.mensagem = null;
 
       if(this.checarForm()) {
@@ -65,6 +66,7 @@ export default {
           this.mensagem = resposta.message;
         }
       }
+      event.target.classList.remove('is-loading');
     },
     checarForm() {
       this.erros = {};
@@ -116,6 +118,11 @@ export default {
   width: 3rem;
   margin-left: auto;
   margin-right: auto;
+}
+
+.login-area .error-msg {
+  margin-top: -0.75rem;
+  margin-bottom: 0.75rem;
 }
 
 .login-area .field .input:focus {

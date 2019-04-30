@@ -73,7 +73,10 @@ export default {
                 drawBorder: false,
                 offsetGridLines: false
               },
-              type: 'time'
+              type: 'time',
+              time: {
+                    unit: 'day'
+                }
             }
           ]
         },
@@ -104,6 +107,7 @@ export default {
   margin-bottom: 1.5rem;
   background: #27293d;
   border-radius: 5px;
+  padding: 0;
 }
 
 .header-area {

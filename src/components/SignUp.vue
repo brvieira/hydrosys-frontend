@@ -73,7 +73,6 @@ export default {
         let resposta = await usuariosUtils.newUser(usuario);
 
         if(resposta.status) {
-          delete usuario.senha;
           localStorage.setItem('usuario', JSON.stringify(usuario));
           this.$router.push({name: 'dashboard'});
         }
