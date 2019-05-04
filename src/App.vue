@@ -1,36 +1,34 @@
 <template>
   <div id="app">
-    <sidebar v-if="!hide"/>
-    <navbar v-if="!hide"/>
+    <navbar v-if="!hideNav"/>
     <router-view/>
   </div>
 </template>
 
 <script>
-import sidebar from './components/SideBar'
-import navbar from './components/Navbar'
+import navbar from "./components/Navbar";
 
 export default {
-  name: 'App',
-  components: { sidebar, navbar },
+  name: "App",
+  components: { navbar },
   computed: {
-  hide () {
-    return this.$route.path === '/' || this.$route.path === '/cadastro'; 
+    hideNav() {
+      return this.$route.path === "/" || this.$route.path === "/cadastro";
+    }
   }
-}
-}
+};
 </script>
 
 <style>
-@import '../node_modules/font-awesome/css/font-awesome.css';
-@import '../node_modules/bulma/css/bulma.css';
-@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
+@import "../node_modules/font-awesome/css/font-awesome.css";
+@import "../node_modules/bulma/css/bulma.css";
+@import url("https://fonts.googleapis.com/css?family=Roboto+Condensed");
 
 html {
   background: #1e1e2a;
 }
 #app {
-  font-family: 'Roboto Condensed', 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Roboto Condensed", "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

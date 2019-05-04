@@ -1,44 +1,85 @@
 <template>
-  <div class="left-bar">
-    <p class="bar-title"><strong>HYDRO</strong>SYS</p>
-    <hr>
-    <div class="add-button"><h1>+</h1></div>
+  <div class="left-bar" id="bar">
+    <div class="content">
+      <p class="bar-title">
+        <b>HYDRO</b>SYS
+      </p>
+      <hr>
+      <ul>
+        <li v-for="(node, index) of usuario.token" :key="index">
+          <p>{{node.nome}}</p>
+        </li>
+      </ul>
+      <router-link to="/addnode" class="add-button">
+        <h1>+</h1>
+      </router-link>
+    </div>
   </div>
 </template>
 <script>
 export default {
   name: "SideBar",
-  methods: {
-
+  props: {
+    widthBar: {
+      type: String
+    }
+  },
+  computed: {
+    usuario: function() {
+      return JSON.parse(localStorage.getItem("usuario"));
+    }
+  },
+  watch: {
+    widthBar(newValue) {
+      document.getElementById("bar").style.width = newValue + "rem";
+    }
+  },
+  mounted() {
+    document.getElementById("bar").style.width = this.widthBar + "rem";
   }
 };
 </script>
 <style scoped>
 .left-bar {
-  padding: 15px 5px;
-  left: 10px;
-  border-radius: 5px;
+  padding-top: 60px;
+  left: 0;
   z-index: 31;
   position: fixed;
-  height: 95%;
-  width: 4rem;
-  background: linear-gradient(0deg,#389466,#42b883);
-  top: calc(5vh / 2);
-  transition: width 0.5s linear;
+  height: 100%;
+  width: 0;
+  background: linear-gradient(0deg, #389466, #42b883);
+  top: 0;
+  transition: 0.4s;
+  overflow-x: hidden;
 }
 
-p.bar-title, p.bar-title strong {
+.left-bar .content {
+  min-width: 15rem;
+  position: relative;
+  height: 100%;
+}
+
+.content ul {
+  margin-left: 0;
+  margin-right: 0; 
+}
+
+.content p {
+  margin: 0;
+}
+
+.bar-title,
+hr,
+ul li,
+.add-button {
+  display: block;
+}
+
+p.bar-title,
+p.bar-title strong {
   color: aliceblue;
-  font-size: 10px;
-  transition: font-size 0.5s linear;
-}
-
-.left-bar:hover {
-  width: 15rem;
-}
-
-.left-bar:hover p.bar-title, .left-bar:hover p.bar-title strong {
   font-size: 2rem;
+  transition: font-size 0.5s linear;
 }
 
 hr {
@@ -48,7 +89,7 @@ hr {
 
 .add-button {
   margin-left: auto;
-  margin-right: auto; 
+  margin-right: auto;
   position: absolute;
   bottom: 2rem;
   left: 0;
@@ -56,7 +97,7 @@ hr {
   background: white;
   width: 3rem;
   height: 3rem;
-  border-radius: 50%
+  border-radius: 50%;
 }
 
 .add-button h1 {
@@ -69,5 +110,4 @@ hr {
   cursor: pointer;
   box-shadow: 3px 5px 7px -1px black;
 }
-
 </style>

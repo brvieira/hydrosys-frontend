@@ -14,4 +14,8 @@ function editUser(user) {
     return axios.postUrl(url + '/editUser', user);
 }
 
-export { newUser, login, editUser }
+function addNode(user) {
+    return axios.postUrl(url + '/addnode', user);
+}
+
+export { newUser, login, editUser, addNode }

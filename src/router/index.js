@@ -4,6 +4,7 @@ import Login from '@/components/Login'
 import SignUp from '@/components/SignUp'
 import HistoryData from '@/components/HistoryData'
 import ManageUser from '@/components/ManageUser'
+import AddNode from '@/components/AddNode'
 
 Vue.use(Router)
 
@@ -37,6 +38,14 @@ let router = new Router({
       path: '/manageuser',
       name: 'manageuser',
       component: ManageUser,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/addnode',
+      name: 'addnode',
+      component: AddNode,
       meta: {
         requiresAuth: true
       }

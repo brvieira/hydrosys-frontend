@@ -5,6 +5,9 @@
         <b>Primeiro</b> Acesso
       </p>
       <hr>
+
+      <p v-if="erros && erros.msg" class="has-text-centered">{{erros.msg}}</p>
+      
       <div class="field">
         <label class="label">Nome</label>
         <div class="control has-icons-left has-icons-right">
@@ -75,6 +78,10 @@ export default {
         if(resposta.status) {
           localStorage.setItem('usuario', JSON.stringify(usuario));
           this.$router.push({name: 'dashboard'});
+        } else {
+          this.erros = {};
+          this.erros.msg = resposta.message;
+          console.log(this.erros);
         }
       }
     },

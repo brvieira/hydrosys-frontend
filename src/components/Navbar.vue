@@ -1,5 +1,10 @@
 <template>
   <nav v-if="loaded" class="navbar is-fixed-top">
+    <div class="navbar-start">
+      <div class="navbar-item">
+        <i @click="openMenu" class="fas fa-bars fa-lg has-text-white"></i>
+      </div>
+    </div>
     <div class="navbar-end">
       <div class="navbar-item username">
         {{usuario.nome}}
@@ -15,22 +20,37 @@
         </div>
       </div>
     </div>
+    <sidebar :widthBar="widthBar"/>
+    <i v-if="showClose" @click="closeMenu" class="fas fa-times has-text-white close-button"></i>
   </nav>
 </template>
 <script>
+import sidebar from './SideBar'
+
 export default {
   name: "Navbar",
+  components: { sidebar },
   data() {
     return {
       showNav: false,
       usuario: null,
-      loaded: false
+      loaded: false,
+      widthBar: '0',
+      showClose: false
     };
   },
   methods: {
     sair() {
       localStorage.removeItem("usuario");
       this.$router.push({ name: "login" });
+    },
+    openMenu() {
+      this.widthBar = '15';
+      setTimeout(function(self) { self.showClose = true }, 500, this);
+    }, 
+    closeMenu() {
+      this.widthBar = '0';
+      this.showClose = false;
     }
   },
   mounted() {
@@ -43,6 +63,10 @@ export default {
 .navbar {
   background: #1e1e2a;
   padding: 0 15px;
+}
+
+.navbar .navbar-start .navbar-item i:hover {
+  cursor: pointer;
 }
 
 .navbar .navbar-end .navbar-item.username {
@@ -62,5 +86,12 @@ export default {
 
 .navbar .navbar-item .navbar-dropdown {
   border-top-left-radius: 6px;
+}
+
+.close-button {
+  z-index: 32;
+  position: fixed;
+  top: 1rem;
+  left: 13rem;
 }
 </style>
