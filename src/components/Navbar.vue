@@ -14,6 +14,8 @@
           <i class="fas fa-user-circle fa-2x"></i>
         </span>
         <div class="navbar-dropdown is-right">
+          <router-link to="/addnode" class="navbar-item">Adicionar Nó Sensor</router-link>
+          <hr class="navbar-divider">
           <router-link to="/manageuser" class="navbar-item">Alterar Senha</router-link>
           <hr class="navbar-divider">
           <a @click="sair" class="navbar-item">Sair</a>
@@ -35,8 +37,8 @@ export default {
       showNav: false,
       usuario: null,
       loaded: false,
-      widthBar: '0',
-      showClose: false
+      widthBar: '15',
+      showClose: true
     };
   },
   methods: {
@@ -67,6 +69,7 @@ export default {
 
 .navbar .navbar-start .navbar-item i:hover {
   cursor: pointer;
+  color: grey !important;
 }
 
 .navbar .navbar-end .navbar-item.username {
@@ -93,5 +96,10 @@ export default {
   position: fixed;
   top: 1rem;
   left: 13rem;
+}
+
+.close-button:hover {
+  cursor: pointer;
+  color: grey !important;
 }
 </style>

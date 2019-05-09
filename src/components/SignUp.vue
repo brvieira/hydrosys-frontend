@@ -77,7 +77,7 @@ export default {
 
         if(resposta.status) {
           localStorage.setItem('usuario', JSON.stringify(usuario));
-          this.$router.push({name: 'dashboard'});
+          this.$router.push({name: 'inicio'});
         } else {
           this.erros = {};
           this.erros.msg = resposta.message;

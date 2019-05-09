@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <navbar v-if="!hideNav"/>
-    <router-view/>
+    <router-view :key="$route.fullPath"/>
   </div>
 </template>
 

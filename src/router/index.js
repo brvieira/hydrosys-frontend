@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/components/Login'
 import SignUp from '@/components/SignUp'
+import Initial from '@/components/Initial'
 import HistoryData from '@/components/HistoryData'
 import ManageUser from '@/components/ManageUser'
 import AddNode from '@/components/AddNode'
@@ -27,7 +28,15 @@ let router = new Router({
       }
     },
     {
-      path: '/dashboard',
+      path: '/inicio',
+      name: 'inicio',
+      component: Initial,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/dashboard/:token',
       name: 'dashboard',
       component: HistoryData,
       meta: {
@@ -64,7 +73,7 @@ router.beforeEach((to, from, next) => {
     if (localStorage.getItem('usuario') == null) {
       next();
     } else {
-      next({ name: 'dashboard' })
+      next({ name: 'inicio' })
     }
   }
 })

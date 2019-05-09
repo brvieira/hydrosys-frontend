@@ -61,7 +61,7 @@ export default {
         let resposta = await usuariosUtils.editUser(usuario);
 
         if (resposta.status) {
-          this.$router.push({ name: "dashboard" });
+          this.$router.push({ name: "inicio" });
         }
       }
     },

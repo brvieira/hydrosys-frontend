@@ -6,4 +6,8 @@ function getAllData() {
     return axios.callUrl(url);
 }
 
-export { getAllData }
+function getDataByToken(token) {
+    return axios.callUrl(url+'/getData/'+token);
+}
+
+export { getAllData, getDataByToken }

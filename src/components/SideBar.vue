@@ -1,18 +1,11 @@
 <template>
   <div class="left-bar" id="bar">
     <div class="content">
-      <p class="bar-title">
-        <b>HYDRO</b>SYS
-      </p>
+      <router-link to="/inicio" tag="p" class="bar-title"><b>HYDRO</b>SYS</router-link>
       <hr>
-      <ul>
-        <li v-for="(node, index) of usuario.token" :key="index">
-          <p>{{node.nome}}</p>
-        </li>
-      </ul>
-      <router-link to="/addnode" class="add-button">
-        <h1>+</h1>
-      </router-link>
+      <div v-for="(node, index) of usuario.token" :key="index" class="menu-item">
+        <router-link tag="p" :to="{ name: 'dashboard', params: { token: node.token }}">{{index+1}} - {{node.nome}}</router-link>
+      </div>
     </div>
   </div>
 </template>
@@ -47,7 +40,7 @@ export default {
   position: fixed;
   height: 100%;
   width: 0;
-  background: linear-gradient(0deg, #389466, #42b883);
+  background: linear-gradient(0deg, #238855, #42b883);
   top: 0;
   transition: 0.4s;
   overflow-x: hidden;
@@ -68,10 +61,13 @@ export default {
   margin: 0;
 }
 
+.bar-title:hover {
+  cursor: pointer;
+}
+
 .bar-title,
 hr,
-ul li,
-.add-button {
+ul li {
   display: block;
 }
 
@@ -83,31 +79,28 @@ p.bar-title strong {
 }
 
 hr {
-  margin: 0 1.5rem;
-  height: 1.5px;
+  margin: 0 0.75rem;
+  height: 1px;
+  margin-bottom: 1rem;
 }
 
-.add-button {
-  margin-left: auto;
-  margin-right: auto;
-  position: absolute;
-  bottom: 2rem;
-  left: 0;
-  right: 0;
-  background: white;
-  width: 3rem;
-  height: 3rem;
-  border-radius: 50%;
+.menu-item {
+  height: 4rem;
+  padding: 0 0.75rem;
 }
 
-.add-button h1 {
-  line-height: 3rem;
-  font-size: 2rem;
-  color: #42b883;
+.menu-item p {
+  line-height: 4rem;
+  border-radius: 5px;
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 500;
+  text-align: left;
+  padding-left: 1rem;
 }
 
-.add-button:hover {
+.menu-item p:hover {
   cursor: pointer;
-  box-shadow: 3px 5px 7px -1px black;
+  background-color: rgba(0, 0, 0, 0.3)
 }
 </style>
