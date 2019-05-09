@@ -15,7 +15,13 @@ export default {
 </script>
 <style scoped>
 .container {
-    padding: 6rem 10rem;
+    padding: 6rem 8rem;
+}
+
+.mensagem {
+    padding: 2rem;
+    background-color: (255, 255, 255, 0.1);
+    border-radius: 5px;
 }
 
 .mensagem * {
