@@ -1,43 +1,45 @@
 <template>
-  <div class="container">
-    <internal-humidity v-if="loaded" :data="internalHumidity" :labels="labels"></internal-humidity>
-    <internal-temp v-if="loaded" :data="internalTemp" :labels="labels"></internal-temp>
-    <solution-temp v-if="loaded" :data="solutionTemp" :labels="labels"></solution-temp>
+  <div v-if="loaded" class="container is-fullhd">
+    <h1 class="title is-3 has-text-weight-normal has-text-white">{{node.nome}}</h1>
+    <div v-if="data.length > 0" class="show-area">
+      <p class="is-6 has-text-weight-normal has-text-white">{{node.descricao}}</p>
+      <chart v-for="(metric, index) of data" :data="metric" :key="index"></chart>
+    </div>
+    <div v-else class="mensagem-area"><p>Não há dados disponíveis no momento para o nó sensor selecionado.</p></div>
   </div>
+  <spinner v-else/>
 </template>
-
 <script>
-import * as api from "../data/hydrosys";
-import InternalTemp from "./InternalTemp";
-import InternalHumidity from "./InternalHumidity";
-import SolutionTemp from "./SolutionTemp";
+import * as api from "../data/dados";
+import chart from "./Chart";
 import moment from "moment";
+import spinner from "./Spinner";
 
 export default {
   name: "HistoryData",
-  components: { InternalTemp, InternalHumidity, SolutionTemp },
+  components: { chart, spinner },
   data() {
     return {
       loaded: false,
-      internalTemp: null,
-      internalHumidity: null,
-      solutionTemp: null,
-      labels: null,
-      options: null
+      data: null,
+      token: null,
+      node: null
     };
   },
   methods: {
-    async getAllData() {
+    async getAllData(token) {
       try {
         let self = this;
         self.loaded = false;
-        let result = await api.getAllData();
 
-        self.internalTemp = result.map(x => x.temperaturaInterna);
-        self.internalHumidity = result.map(x => x.umidadeInterna);
-        self.solutionTemp = result.map(x => x.temperaturaSolucao);
-        self.labels  = result.map(x => moment(x.data).format("DD/MM/YY - HH:mm"));
+        let usuario = JSON.parse(localStorage.getItem("usuario"));
+        
+        let node = usuario.token.find(x => x.token == token);
+        self.node = node;
 
+        let result = await api.getDataByToken(token);
+
+        self.data = result;
         self.loaded = true;
       } catch (error) {
         console.log(error);
@@ -45,19 +47,31 @@ export default {
     }
   },
   mounted() {
-    let self = this;
-    this.getAllData();
-    setInterval(function() {
-      self.getAllData();
-      console.log("Loading data...");
-    }, 5 * 60 * 1000);
+    this.token = this.$route.params.token;
+    this.getAllData(this.token);
   }
 };
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .container {
-  margin-top: 3rem
+  padding-top: 6rem; 
+}
+
+.title {
+  margin-bottom: 1rem;
+}
+
+.mensagem-area {
+  display: flex;
+  height: 40vh;
+}
+
+.mensagem-area p {
+  color: white;
+  font-size: 1.25rem;
+  margin: auto;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 5rem;
+  border-radius: 5px;
 }
 </style>
